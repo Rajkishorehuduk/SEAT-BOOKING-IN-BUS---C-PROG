@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define ROWS 5
+#define COLS 4
+
+void initializeSeats(int seats[ROWS][COLS]);
+void displaySeats(int seats[ROWS][COLS]);
+void bookSeat(int seats[ROWS][COLS]);
+
+int main() {
+    int seats[ROWS][COLS];
+    int choice;
+
+    initializeSeats(seats);
+
+    while (1) {
+        printf("\n--- Bus Seat Booking System ---\n");
+        printf("1. Display Seat Status\n");
+        printf("2. Book a Seat\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch(choice) {
+            case 1:
+                displaySeats(seats);
+                break;
+            case 2:
+                bookSeat(seats);
+                break;
+            case 3:
+                printf("Thank you for using the booking system!\n");
+                exit(0);
+            default:
+                printf("Invalid choice. Try again.\n");
+        }
+    }
+    return 0;
+}
+
+void initializeSeats(int seats[ROWS][COLS]) {
+    for (int i = 0; i < ROWS; i++)
+        for (int j = 0; j < COLS; j++)
+            seats[i][j] = 0;
+}
+
+void displaySeats(int seats[ROWS][COLS]) {
+    printf("\nSeat Layout (0 = Available, 1 = Booked):\n");
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            printf("%2d ", seats[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void bookSeat(int seats[ROWS][COLS]) {
+    int row, col;
+    printf("Enter row (1-%d): ", ROWS);
+    scanf("%d", &row);
+    printf("Enter column (1-%d): ", COLS);
+    scanf("%d", &col);
+
+    if (row < 1 || row > ROWS || col < 1 || col > COLS) {
+        printf("Invalid seat number.\n");
+        return;
+    }
+
+    if (seats[row-1][col-1] == 0) {
+        seats[row-1][col-1] = 1;
+        printf("Seat booked successfully!\n");
+    } else {
+        printf("Seat already booked!\n");
+    }
+}
